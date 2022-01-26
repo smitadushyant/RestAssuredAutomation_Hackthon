@@ -38,7 +38,7 @@ private HashMap<String, HashMap<String, Object>> data = new HashMap<String, Hash
 		HashMap<String, HashMap<String, Object>> dataMap = new HashMap<String, HashMap<String,Object>>();
 		
 		int rows = reader.getRowCount(SHEET_NAME);
-		//System.out.println("rows :: "+rows);
+		
 		for(int rowNum = 2; rowNum <= rows; rowNum++) 
 		{
 			
@@ -55,14 +55,7 @@ private HashMap<String, HashMap<String, Object>> data = new HashMap<String, Hash
 			String skillName = reader.getCellData(SHEET_NAME, 1, rowNum);
 			innerDataMap.put("skill_name", skillName);
 			
-			/*String statusCode = reader.getCellData(SHEET_NAME, 10, rowNum);
-			System.out.println(statusCode);
-			int statusCodeNumber = Math.round(Integer.parseInt(statusCode));
-			
-			int statusCodeNumber = Math.round(Float.parseFloat(statusCode));
-			System.out.println(statusCodeNumber);
-			innerDataMap.put("statuscode", statusCodeNumber);*/
-			
+						
 			dataMap.put(dataKey, innerDataMap);
 			
 		}
@@ -109,7 +102,7 @@ private void postSkillRequest(HashMap<String, Object> map) {
 	
 	@Given("I  am  on Post request")
 	public void i_am_on_post_request() {
-	    System.out.println("i am in given");
+	   
 	    data = populateSkillDataFromExcel();
 	}
 
@@ -136,9 +129,9 @@ private void postSkillRequest(HashMap<String, Object> map) {
 
 	@Then("I recieve a {int} valid status code")
 	public void i_recieve_a_valid_status_code(Integer int1) {
-		//HashMap<String, Object> validDataMap = data.get("validskilldata");
+		
 		try {
-			//Assert.assertEquals(validDataMap.get("statuscode"), testContext.response.statusCode());
+			
 			Assert.assertEquals(testContext.response.statusCode(), int1.intValue());
 		}catch(AssertionError ex) {
 			ex.printStackTrace();

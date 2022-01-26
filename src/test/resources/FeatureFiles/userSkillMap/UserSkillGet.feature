@@ -13,8 +13,8 @@ Scenario Outline: To fetch the data with userSkillID
 Given User is on GET Method with Endpoint as /UserSkills/id
 When User sends request with Valid userSkillId
 Then JSON schema is valid for UserSkillMap API
-And User receives status code 200 for UserSkillMap API
-And User should receive a details of specific user ID 
+And User receives 200 OK status code for UserSkillMap API
+
 
 # For G3
 
@@ -33,7 +33,7 @@ And User should receive a details of specific user ID
 #Scenario Outline: To get user record for blank userID 
   #Given user set GET method with endpoint/url/Userskills/ID
   When User sends the request with blank userSkillID for UserSkillMap API
-  Then User receives status code 200 for UserSkillMap API
+  Then User receives status code 404 for UserSkillMap API
   
   #For G6
 #Scenario Outline: To get user record for decimal userID 
@@ -62,7 +62,7 @@ And User should receive a details of specific user ID
   Then User receives status code 404 for UserSkillMap by non-existing userId
   
   #For G24
-  Scenario Outline: Retrieve users of particular skill id
+  	Scenario Outline: Retrieve users of particular skill id
    Given user set GET method with endpoint/url/UserskillsMap/skillId
    When User sends the request with skillId for UserSkillMap 
    Then JSON schema is valid for UserSkillMap API getting by skillId
@@ -72,7 +72,6 @@ And User should receive a details of specific user ID
   #Scenario Outline: Retrieve users of particular skill id
    #Given user set GET method with endpoint/url/UserskillsMap/skillId
   When User sends the request with a non-existing skillId for UserSkillMap 
-   Then User receives status code 200 for UserSkillMap API by non-existing skillId
+   Then User receives status code 404 for UserSkillMap API by non-existing skillId
   
   
- 

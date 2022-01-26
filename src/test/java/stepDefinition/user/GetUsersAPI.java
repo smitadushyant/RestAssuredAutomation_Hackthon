@@ -48,35 +48,19 @@ public class GetUsersAPI {
 			
 			String statusCode = reader.getCellData(SHEET_NAME, 2, rowNum);
 			int statusCodeNumber = Math.round(Float.parseFloat(statusCode));
-			innerDataMap.put("statuscode", statusCodeNumber);
+			innerDataMap.put("statuscode", statusCodeNumber );
 			
 			dataMap.put(dataKey, innerDataMap);
 		}
-		/*
-		ObjectMapper mapper = new ObjectMapper();
-		String expectedJSON;
-		try {
-			expectedJSON = mapper.writeValueAsString(dataMap);
-			System.out.println("BasicAuth :: expectedJSON :: " + expectedJSON);
-		} catch (JsonProcessingException e) {
-			e.printStackTrace();
-		}
-		*/
 		
 		return dataMap;
 	}
-/*
-	private void setupRestAssured() {
-		RestAssured.port = 8080;
-		request = RestAssured.given();
-		request.auth().preemptive().basic("APIPROCESSING", "2xx@Success");
-	}
-*/
 
-	/** Test for all users **/
+	/** Test for all UsersSkill **/
 	@Given("user set GET method with endpoint\\/url\\/Users")
 	public void user_set_get_method_with_endpoint_url_users() {
-		request = util.requestSpecification(request);
+		//request = util.requestSpecification(request);
+		request=util.requestSpecification(request);
 	}
 
 	@When("User sends request")
@@ -88,6 +72,7 @@ public class GetUsersAPI {
 	public void json_schema_is_valid() {
 		boolean isJsonString = isJSONValid(response.asString());
 		Assert.assertTrue(isJsonString);
+		
 	}
 
 	@Then("User receives status code {int}")
@@ -98,6 +83,7 @@ public class GetUsersAPI {
 	@Then("User should receive a list of all Users")
 	public void user_should_receive_a_list_of_all_users() {
 		System.out.println("list of all users");
+		System.out.println("list of Users"+response.getBody().asPrettyString());
 	}
 
 	/** Test for valid id **/
@@ -110,8 +96,8 @@ public class GetUsersAPI {
 	public void user_sends_the_request_with_specific_userid() {
 		request = util.requestSpecification(request);
 		HashMap<String, Object> validDataMap = data.get("validuserid");
-
 		response = request.get("/Users/" + validDataMap.get("Value"));
+		System.out.println("valid User"+validDataMap.get("Value"));
 
 	}
 	@Then("User should receive a details of specific user ID")
@@ -123,72 +109,86 @@ public class GetUsersAPI {
 
 	@When("User sends the request with invalid id")
 	public void user_sends_the_request_with_invalid_id() {
-		String sheetName = "get";
+		//String sheetName = "get";
+		request = util.requestSpecification(request);
+
 		ExcelReader reader = new ExcelReader(FILE_NAME);
-		String data = reader.getCellData(sheetName, 1, 3);
-		System.out.println("/Users/" + data);
+		String data = reader.getCellData(SHEET_NAME, 1, 3);
+		System.out.println("/Users" + data);
 		response = request.get("/Users/" + data);
 	}
 
 	@When("User sends the request with aplphnumeric id")
 	public void user_sends_the_request_with_aplphnumeric_id() {
-		String sheetName = "get";
+		//String sheetName = "get";
+		request = util.requestSpecification(request);
+
 		ExcelReader reader = new ExcelReader(FILE_NAME);
-		String data = reader.getCellData(sheetName, 1, 4);
+		String data = reader.getCellData(SHEET_NAME, 1, 4);
 		System.out.println("/Users/" + data);
 		response = request.get("/Users/" + data);
 	}
 
 	@When("User sends the request with blank id")
 	public void user_sends_the_request_with_blank_id() {
-		String sheetName = "get";
+		//String sheetName = "get";
+		request = util.requestSpecification(request);
+
 		ExcelReader reader = new ExcelReader(FILE_NAME);
-		String data = reader.getCellData(sheetName, 1, 5);
+		String data = reader.getCellData(SHEET_NAME, 1, 5);
 		response = request.get("/Users/" + data);
 	}
 
 	@When("User sends the request with decimal id")
 	public void user_sends_the_request_with_decimal_id() {
-		String sheetName = "get";
+		//String sheetName = "get";
+		request = util.requestSpecification(request);
+
 		ExcelReader reader = new ExcelReader(FILE_NAME);
-		String data = reader.getCellData(sheetName, 1, 6);
+		String data = reader.getCellData(SHEET_NAME, 1, 6);
 		response = request.get("/Users/" + data);
 	}
 
 	@When("User sends the request with non existing id")
 	public void user_sends_the_request_with_non_existing_id() {
-		String sheetName = "get";
+		//String sheetName = "get";
+		request = util.requestSpecification(request);
+
 		ExcelReader reader = new ExcelReader(FILE_NAME);
-		String data = reader.getCellData(sheetName, 1, 7);
+		String data = reader.getCellData(SHEET_NAME, 1, 7);
 		System.out.println("/Users/" + data);
 		response = request.get("/Users/" + data);
 	}
 
 	@When("User sends the request with null id")
-	public void user_sends_the_request_with_null_id() {
-		String sheetName = "get";
+	public void user_sends_the_request_with_null_id()
+	{
+		request = util.requestSpecification(request);
 		ExcelReader reader = new ExcelReader(FILE_NAME);
-		String data = reader.getCellData(sheetName, 1, 8);
+		String data = reader.getCellData(SHEET_NAME, 1, 8);
 		System.out.println("/Users/" + data);
 		response = request.get("/Users/" + data);
 	}
 
 	@When("User sends the request with zero id")
-	public void user_sends_the_request_with_zero_id() {
-		String sheetName = "get";
+	public void user_sends_the_request_with_zero_id()
+	{
+		request = util.requestSpecification(request);
 		ExcelReader reader = new ExcelReader(FILE_NAME);
-		String data = reader.getCellData(sheetName, 1, 9);
+		String data = reader.getCellData(SHEET_NAME, 1, 9);
 		System.out.println("/Users/" + data);
 		response = request.get("/Users/" + data);
 	}
 	
 	@Then("JSON schema is valid for Users")
-	public void json_schema_is_valid_for_Users() {
+	public void json_schema_is_valid_for_Users()
+	{
 		boolean isJsonString = isJSONValid(response.asString());
 		Assert.assertTrue(isJsonString);
 	}
 	
-	public static boolean isJSONValid(String serverresponse) {
+	public static boolean isJSONValid(String serverresponse) 
+	{
 		try {
 			new JSONObject(serverresponse);
 		} catch (JSONException ex) {

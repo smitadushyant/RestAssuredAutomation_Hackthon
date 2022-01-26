@@ -1,5 +1,4 @@
 package stepDefinition.userSkillMap;
-
 import java.util.HashMap;
 
 import org.junit.Assert;
@@ -39,7 +38,7 @@ public class UserSkillMapDelete {
 
 			String userId = reader.getCellData(SHEET_NAME, 1, rowNum);
 			//System.out.println(userId);
-			innerDataMap.put("UserSkillId", userId);
+			innerDataMap.put("user_skill_id", userId);
 
 			String statusCode = reader.getCellData(SHEET_NAME, 2, rowNum);
 			int statusCodeNumber = Math.round(Float.parseFloat(statusCode));
@@ -57,23 +56,25 @@ public class UserSkillMapDelete {
 		return dataMap;
 	}
 	
-	@Given("Set Delete request endpoint to \\UserSkills\\id")
+	@Given("Set Delete request endpoint to \\/UserSkills\\/id")
 	public void set_delete_request_endpoint_to_user_skills_id() {
 		// Read data from excel
 		data = populateDataFromExcel();
+		
 	}
+	
 
 	@When("User sends request with valid userSkillId for UserSkillMap Delete API")
 	public void user_sends_request_with_valid_user_skill_id_for_user_skill_map_delete_api() {
 		request = util.requestSpecification(request);
-		HashMap<String, Object> validDataMap = data.get("validId");
-
-		response = request.delete("/UserSkills/" + validDataMap.get("UserSkillId"));
+		HashMap<String, Object> validDataMap = data.get("ValidUserSkills/id");
+		response = request.delete("/UserSkills/" + validDataMap.get("ValidUserSkills/id"));
+		  
 	}
 
 	@Then("User should receive a valid response code 200 for UserSkillMap Delete API")
 	public void user_should_receive_a_valid_response_code_for_user_skill_map_delete_api() {
-		HashMap<String, Object> validDataMap = data.get("validId");
+		HashMap<String, Object> validDataMap = data.get("ValidUserSkills/id");
 		try {
 			Assert.assertEquals(validDataMap.get("statuscode"), response.statusCode());
 		}catch(AssertionError ex) {
@@ -82,29 +83,36 @@ public class UserSkillMapDelete {
 		}
 		System.out.println("The actual response status code is : " + response.getStatusCode());
 	}
-
+		
+		
+	
 	@When("User sends request with invalid userSkillId for UserSkillMap Delete API")
 	public void user_sends_request_with_invalid_user_skill_id_for_user_skill_map_delete_api() {
 		request = util.requestSpecification(request);
-		HashMap<String, Object> inValidDataMap = data.get("invalidId");
+		HashMap<String, Object> inValidDataMap = data.get("InvalidUserSkills/id");
 
-		response = request.delete("/UserSkills/" + inValidDataMap.get("UserSkillId"));
+		response = request.delete("/UserSkills/" + inValidDataMap.get("InvalidUserSkills/id"));
 	}
-	
+		
+		
 	@When("User sends request with non-existing userSkillId for UserSkillMap Delete API")
 	public void user_sends_request_with_non_existing_user_skill_id_for_user_skill_map_delete_api() {
 		request = util.requestSpecification(request);
-		HashMap<String, Object> nonExistDataMap = data.get("nonExistingId");
+		HashMap<String, Object> nonExistDataMap = data.get("Non_ExistingUserSkills/id");
 
-		response = request.delete("/UserSkills/" + nonExistDataMap.get("UserSkillId"));
+		response = request.delete("/UserSkills/" + nonExistDataMap.get("Non_ExistingUserSkills/id"));
+	
+		
+			
 	}
 	
 	@When("User sends request with decimal userSkillId for UserSkillMap Delete API")
 	public void user_sends_request_with_decimal_user_skill_id_for_user_skill_map_delete_api() {
 		request = util.requestSpecification(request);
-		HashMap<String, Object> decimalDataMap = data.get("decimalId");
+		HashMap<String, Object> decimalDataMap = data.get("DecimalUserSkill/id");
 
-		response = request.delete("/UserSkills/" + decimalDataMap.get("UserSkillId"));
+		response = request.delete("/UserSkills/" + decimalDataMap.get("DecimalUserSkill/id"));
+	
 	}
 
 	@Then("User should receive a response code {int} for UserSkillMap Delete API")
@@ -118,6 +126,8 @@ public class UserSkillMapDelete {
 		}
 		System.out.println("The actual response status code is : " + response.getStatusCode());
 	}
+		
+	
 
 	@When("User sends request with blank userSkillId for UserSkillMap Delete API")
 	public void user_sends_request_with_blank_user_skill_id_for_user_skill_map_delete_api() {
@@ -128,7 +138,7 @@ public class UserSkillMapDelete {
 
 	@Then("User should receive 405 Method Not Allowed status code for UserSkillMap Delete API")
 	public void user_should_receive_method_not_allowed_status_code_for_user_skill_map_delete_api() {
-		HashMap<String, Object> validDataMap = data.get("blankId");
+		HashMap<String, Object> validDataMap = data.get("BlankUserSkills/id");
 		try {
 			Assert.assertEquals(validDataMap.get("statuscode"), response.statusCode());
 		}catch(AssertionError ex) {

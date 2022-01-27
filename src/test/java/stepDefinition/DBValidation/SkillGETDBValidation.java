@@ -27,7 +27,7 @@ public class SkillGETDBValidation {
 	@Given("Expected value is queried from DataBase")
 	public void expected_value_is_queried_from_data_base() {
 		try {
-			sqlString = db.connect("SELECT * FROM tbl_lms_skill_master where skill_id='2'", "skill_id");
+			sqlString = db.connect("SELECT * FROM tbl_lms_skill_master where skill_id=2", "skill_id");
 
 			System.out.println("received SqlString = " + sqlString);
 
@@ -42,9 +42,10 @@ public class SkillGETDBValidation {
 		setupRestAssured();
 		response = request.get("/Skills/2");
 		System.out.println("Server response for GET skill = " + response.asString());
-
+		
+		
 		JsonPath jsonPathEvaluator = response.jsonPath();
-		getRequestString = jsonPathEvaluator.get("skill_id");
+		getRequestString = jsonPathEvaluator.get("skill_id").toString();
 		System.out.println("Json element value in response = " + getRequestString);
 
 	}

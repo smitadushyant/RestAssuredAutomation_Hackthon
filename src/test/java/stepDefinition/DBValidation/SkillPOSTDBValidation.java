@@ -20,10 +20,8 @@ public class SkillPOSTDBValidation {
 	String sqlString_skillid = null;
 	String RequestString1 = null;
 	String RequestString2 = null;
-
+	String skillToAdd ="MobileAppiumTest";
 	private RequestSpecification request;
-
-	//private HashMap<String, HashMap<String, Object>> data = new HashMap<String, HashMap<String, Object>>();
 	private void setupRestAssured() {
 		RestAssured.port = 8080;
 		request = RestAssured.given();
@@ -38,7 +36,7 @@ public class SkillPOSTDBValidation {
 		setupRestAssured();
 		
 		JSONObject requestparams = new JSONObject();
-			requestparams.put("skill_name","Trello");
+			requestparams.put("skill_name",skillToAdd);
 			
 		request.header("Content-Type", "application/json");
 
@@ -49,11 +47,9 @@ public class SkillPOSTDBValidation {
 		int statusCode = response.getStatusCode();
 		System.out.println("statusCode ="+ statusCode);
 		Assert.assertEquals(statusCode, 201);
-		//ResponseBody body = response.getBody();
-
 		
 		JsonPath jsonPathEvaluator = response.jsonPath();
-		RequestString1 = jsonPathEvaluator.get("skill_id");
+		RequestString1 = jsonPathEvaluator.get("skill_id").toString();
 		RequestString2 = jsonPathEvaluator.get("message_response");
 		System.out.println("Json element value in response = " + RequestString1);
 		System.out.println("Json element value in response = " + RequestString2);
@@ -62,13 +58,13 @@ public class SkillPOSTDBValidation {
 		
 	}
 
-	@When("New Skill is queried from DB")
+	@When("New skill is queried from DB")
 	public void new_skill_is_queried_from_db() {
 		try {
 			
-			sqlString_creationTime = db.connect("SELECT * FROM tbl_lms_skill_master where skill_name='Trello'", "creation_time");
-			sqlString_modTime = db.connect("SELECT * FROM tbl_lms_skill_master where skill_name='Trello'", "last_mod_time");
-			sqlString_skillid = db.connect("SELECT * FROM tbl_lms_skill_master where skill_name='Trello'", "skill_id");
+			sqlString_creationTime = db.connect("SELECT * FROM tbl_lms_skill_master where skill_name='"+skillToAdd+"'", "creation_time");
+			sqlString_modTime = db.connect("SELECT * FROM tbl_lms_skill_master where skill_name='"+skillToAdd+"'", "last_mod_time");
+			sqlString_skillid = db.connect("SELECT * FROM tbl_lms_skill_master where skill_name='"+skillToAdd+"'", "skill_id");
 			
 			System.out.println("received DB value sqlString_creationTime = " + sqlString_creationTime);
 			System.out.println("received DB value sqlString_modTime = " + sqlString_modTime);
@@ -79,6 +75,8 @@ public class SkillPOSTDBValidation {
 		}
 	    
 	}
+	
+
 
 	@Then("Compare and Assert request sent and DB skill details")
 	public void compare_and_assert_request_sent_and_db_skill_details() {

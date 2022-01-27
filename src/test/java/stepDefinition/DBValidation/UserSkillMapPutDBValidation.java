@@ -59,7 +59,7 @@ public class UserSkillMapPutDBValidation {
 		JsonPath jsonPathEvaluator = response.jsonPath();
 		RequestString_userskillid = jsonPathEvaluator.get("user_skill_id");
 		RequestString_message= jsonPathEvaluator.get("message_response");
-		RequestString=jsonPathEvaluator.get("months_of_exp");
+		RequestString=jsonPathEvaluator.get("months_of_exp").toString();
 		System.out.println("Json element value in response = " + RequestString_userskillid);
 		System.out.println("Json element value in response = " + RequestString_message);
 		System.out.println("Json element value in response = " + RequestString);

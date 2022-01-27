@@ -18,7 +18,7 @@ public class UserSkillMapDeleteDBValidation {
 	String sqlString_userskillid = null;
 	String RequestString_userid = null;
 	String RequestString_message = null;
-	String id = "US09";
+	String id = "US08";
 	private Response response;
 	
 

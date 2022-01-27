@@ -21,7 +21,8 @@ public class SkillPUTDBValidation {
 	String RequestString_skillid = null;
 	String RequestString_skillname = null;
 	String RequestString_message = null;
-	String skillid = "8";
+	int skillid = 8;
+	String skillToAdd ="Cypress";
 	
 	private RequestSpecification request;
 	private void setupRestAssured() {
@@ -32,37 +33,41 @@ public class SkillPUTDBValidation {
 	@SuppressWarnings("unchecked")
 	@Given("User details are modified for existing skill with Put request")
 	public void user_details_are_modified_for_existing_skill_with_put_request() {
-setupRestAssured();
+		setupRestAssured();
 		
 		JSONObject requestparams = new JSONObject();
-		requestparams.put("skill_name", "TrelloPUT");
+		requestparams.put("skill_name", skillToAdd);
 		
 		request.header("Content-Type", "application/json");
-		request.body(requestparams.toJSONString());
-		System.out.println("PUT request payload is : " + requestparams.toJSONString());
+		request.body(requestparams.toString());
+		System.out.println("PUT request payload is : " + requestparams.toString());
 		Response response = request.put("/Skills/"+skillid);
-		
+		System.out.println("request string== /Skills/"+skillid);
+		//System.out.println("Request string "+request.toString());
 		int statusCode = response.getStatusCode();
-		Assert.assertEquals(statusCode, "201");
+		System.out.println("statusCode=="+statusCode);
+		
+		Assert.assertEquals(statusCode, 201);
 		
 		JsonPath jsonPathEvaluator = response.jsonPath();
-		RequestString_skillid = jsonPathEvaluator.get("skill_id");
+		RequestString_skillid = jsonPathEvaluator.get("skill_id").toString();
 		RequestString_message = jsonPathEvaluator.get("message_response");
-		
+		RequestString_skillname = jsonPathEvaluator.getString("skill_name");
 		System.out.println("Json element value in response = " + RequestString_message);
 		System.out.println("Json element value in response = " + RequestString_skillid);
+		
 	}
 
 	@When("Modified user details are queried from DataBase With creation and updation times")
 	public void modified_user_details_are_queried_from_data_base_with_creation_and_updation_times() {
 		try {
-			sqlString_creationTime = db.connect("SELECT * FROM tbl_lms_skill_master where skill_name='Trello'", "creation_time");
-			sqlString_modTime = db.connect("SELECT * FROM tbl_lms_skill_master where skill_name='Trello'", "last_mod_time");
-			sqlString_skillid = db.connect("SELECT * FROM tbl_lms_skill_master where skill_name='Trello'", "skill_id");
+			sqlString_creationTime = db.connect("SELECT * FROM tbl_lms_skill_master where skill_name='"+skillToAdd+"'", "creation_time");
+			sqlString_modTime = db.connect("SELECT * FROM tbl_lms_skill_master where skill_name='"+skillToAdd+"'", "last_mod_time");
+		//	sqlString_skillid = db.connect("SELECT * FROM tbl_lms_skill_master where skill_name='"+skillToAdd+"'", "skill_id");
+			sqlString_skillname =  db.connect("SELECT * FROM tbl_lms_skill_master where skill_id='"+skillid+"'", "skill_name");
 			
 			System.out.println("received DB value sqlString_creationTime = " + sqlString_creationTime);
-			System.out.println("received DB value sqlString_modTime = " + sqlString_modTime);
-			System.out.println("received DB value sqlString_skillid = " + sqlString_skillid);
+			System.out.println("received DB value sqlString_modTime = " + sqlString_modTime);  
 			
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block

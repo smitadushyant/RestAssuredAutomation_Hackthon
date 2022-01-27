@@ -24,7 +24,7 @@ public class UserGETDBValidation {
 	@Given("Expected value is queried from DB")
 	public void expected_value_is_queried_from_db() {
 		try {
-			sqlString = db.connect("SELECT * FROM tbl_lms_user where user_id='U10'", "user_id");
+			sqlString = db.connect("SELECT * FROM tbl_lms_user where user_id='U08'", "user_id");
 
 			System.out.println("received SqlString = " + sqlString);
 
@@ -37,7 +37,7 @@ public class UserGETDBValidation {
 	@When("GET request is sent to get actual response")
 	public void get_request_is_sent_to_get_actual_response() {
 		setupRestAssured();
-		response = request.get("/Users/U10");
+		response = request.get("/Users/U08");
 		System.out.println("Server response for GET user = " + response.asString());
 
 		JsonPath jsonPathEvaluator = response.jsonPath();

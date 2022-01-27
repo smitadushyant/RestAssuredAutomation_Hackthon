@@ -19,7 +19,7 @@ public class UserSkillMapPostDBValidation {
 	String sqlString_userskillid = null;
 	String RequestString_userskillid = null;
 	String RequestString_message = null;
-	String userid = "U09";
+	String userid = "U17";
 	private Response response;
 	
 
@@ -38,7 +38,7 @@ public class UserSkillMapPostDBValidation {
 
 		JSONObject requestparams = new JSONObject();
 		requestparams.put("months_of_exp", "34");
-		requestparams.put("skill_id", " 2");
+		requestparams.put("skill_id", "2");
 		requestparams.put("user_id", userid);
 		
 		request.header("Content-Type", "application/json");
@@ -58,18 +58,16 @@ public class UserSkillMapPostDBValidation {
 		RequestString_message= jsonPathEvaluator.get("message_response");
 		System.out.println("Json element value in response = " + RequestString_userskillid);
 		System.out.println("Json element value in response = " + RequestString_message);
-
-
-		
+	
 	}
 
 	@When("DB is queried for new mapped user")
 	public void DB_is_queried_for_new_mapped_user() {
 	    
 		try {
-			sqlString_creationTime = db.connect("SELECT * FROM tbl_lms_user where user_id='"+userid+"'", "creation_time");
-			sqlString_modTime = db.connect("SELECT * FROM tbl_lms_user where user_first_name='"+userid+"'", "last_mod_time");
-			sqlString_userskillid = db.connect("SELECT * FROM tbl_lms_user where user_first_name='"+userid+"'", "user_skill_id");
+			sqlString_creationTime = db.connect("SELECT * FROM tbl_lms_userskill_map where user_skill_id='"+RequestString_userskillid+"'", "creation_time");
+			sqlString_modTime = db.connect("SELECT * FROM tbl_lms_userskill_map where user_skill_id='"+RequestString_userskillid+"'", "last_mod_time");
+			sqlString_userskillid = db.connect("SELECT * FROM tbl_lms_userskill_map where user_skill_id='"+RequestString_userskillid+"'", "user_skill_id");
 			System.out.println("received DB value sqlString_creationTime = " + sqlString_creationTime);
 			System.out.println("received DB value sqlString_modTime = " + sqlString_modTime);
 			System.out.println("received DB value sqlString_userid = " + sqlString_userskillid);

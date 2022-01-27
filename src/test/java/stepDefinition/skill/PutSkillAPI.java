@@ -1,15 +1,10 @@
 package stepDefinition.skill;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertThat;
+
 
 import java.util.HashMap;
 
-import org.hamcrest.Matcher;
-import org.hamcrest.core.IsNot;
 
-import java.util.HashMap;
 
 
 import org.json.simple.JSONObject;

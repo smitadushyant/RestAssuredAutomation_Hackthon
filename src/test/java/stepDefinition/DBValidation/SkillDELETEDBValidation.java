@@ -16,7 +16,7 @@ public class SkillDELETEDBValidation {
 	String sqlString = null;
 	String deleteRequestString = null;
 	String getRequestString = null;
-	String skill_id = "6";
+	String skill_id = "9";
 	private Response response;
 	private RequestSpecification request;
 	
@@ -43,6 +43,9 @@ public class SkillDELETEDBValidation {
 			sqlString = db.connect("SELECT * FROM tbl_lms_user where skill_id='"+skill_id+"'", "skill_id");
 
 			System.out.println("received SqlString = " + sqlString);
+			if(sqlString==null) {
+				deleteRequestString= "The record has been deleted !!";
+			}
 
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
